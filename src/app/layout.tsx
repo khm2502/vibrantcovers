@@ -20,12 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* logo */}
         <link rel="icon" href="/logo.svg" type="image/svg+xml" />
       </head>
-      <body className={recursive.className}>
+      <body className={recursive.className} suppressHydrationWarning>
         <Navbar />
         <main className="grainy-light flex min-h-[calc(100vh-5rem-1px)] flex-col">
           <div className="flex h-full flex-1 flex-col">

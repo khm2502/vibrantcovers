@@ -31,11 +31,28 @@ const Page = async () => {
     return notFound();
   }
 
-  const dashboardData = await apiClient.getDashboardData(user.id, user.email);
+  let dashboardData;
+  try {
+    dashboardData = await apiClient.getDashboardData(user.id, user.email);
+  } catch (error: any) {
+    console.error('Dashboard API error:', error);
+    console.error('Error details:', {
+      message: error?.message,
+      status: error?.status,
+      userEmail: user.email,
+      adminEmail: ADMIN_EMAIL,
+    });
+    // Return empty data if API fails
+    dashboardData = {
+      orders: [],
+      lastWeekSum: 0,
+      lastMonthSum: 0,
+    };
+  }
 
-  const orders = dashboardData.orders || [];
-  const lastWeekSum = { _sum: { amount: dashboardData.lastWeekSum || 0 } };
-  const lastMonthSum = { _sum: { amount: dashboardData.lastMonthSum || 0 } };
+  const orders = dashboardData?.orders || [];
+  const lastWeekSum = { _sum: { amount: dashboardData?.lastWeekSum || 0 } };
+  const lastMonthSum = { _sum: { amount: dashboardData?.lastMonthSum || 0 } };
 
   const WEEKLY_GOAL = 500;
   const MONTHLY_GOAL = 2500;

@@ -4,6 +4,7 @@ import com.vibrantcovers.entity.Order;
 import com.vibrantcovers.entity.OrderStatus;
 import com.vibrantcovers.entity.User;
 import com.vibrantcovers.repository.OrderRepository;
+import com.vibrantcovers.repository.OrderRepositoryImpl;
 import com.vibrantcovers.repository.UserRepository;
 import com.vibrantcovers.util.IdGenerator;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class OrderService {
     
     private final OrderRepository orderRepository;
+    private final OrderRepositoryImpl orderRepositoryImpl;
     private final UserRepository userRepository;
     private final PaymentService paymentService;
     private final ConfigurationService configurationService;
@@ -75,12 +77,11 @@ public class OrderService {
     }
     
     public List<Order> getPaidOrdersSince(LocalDateTime since) {
-        return orderRepository.findPaidOrdersSince(since);
+        return orderRepositoryImpl.findPaidOrdersSinceNative(since);
     }
     
     public Double getTotalRevenueSince(LocalDateTime since) {
-        Double total = orderRepository.sumPaidOrdersSince(since);
-        return total != null ? total : 0.0;
+        return orderRepositoryImpl.sumPaidOrdersSinceNative(since);
     }
     
     @Transactional

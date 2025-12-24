@@ -28,7 +28,7 @@ public class Order {
     @Column(nullable = false)
     private Double amount;
     
-    @Column(nullable = false)
+    @Column(name = "is_paid", nullable = false)
     private Boolean isPaid = false;
     
     @Enumerated(EnumType.STRING)
@@ -43,10 +43,10 @@ public class Order {
     @JoinColumn(name = "billing_address_id")
     private BillingAddress billingAddress;
     
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
     
-    @Column(nullable = false)
+    @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
     
     @PrePersist

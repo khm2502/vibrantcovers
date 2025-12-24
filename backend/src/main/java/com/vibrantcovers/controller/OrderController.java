@@ -69,10 +69,18 @@ public class OrderController {
         }
         
         LocalDateTime lastWeek = LocalDateTime.now().minusDays(7);
+        LocalDateTime lastMonth = LocalDateTime.now().minusDays(30);
+        
+        System.out.println("Dashboard query - lastWeek: " + lastWeek);
+        System.out.println("Dashboard query - lastMonth: " + lastMonth);
         
         List<Order> orders = orderService.getPaidOrdersSince(lastWeek);
         Double lastWeekSum = orderService.getTotalRevenueSince(lastWeek);
-        Double lastMonthSum = orderService.getTotalRevenueSince(LocalDateTime.now().minusDays(30));
+        Double lastMonthSum = orderService.getTotalRevenueSince(lastMonth);
+        
+        System.out.println("Dashboard results - orders count: " + orders.size());
+        System.out.println("Dashboard results - lastWeekSum: " + lastWeekSum);
+        System.out.println("Dashboard results - lastMonthSum: " + lastMonthSum);
         
         Map<String, Object> response = new HashMap<>();
         response.put("orders", orders); // Frontend expects single orders array
